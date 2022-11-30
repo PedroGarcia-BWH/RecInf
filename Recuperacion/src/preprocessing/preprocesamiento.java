@@ -2,6 +2,8 @@ package preprocessing;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -14,7 +16,7 @@ public class preprocesamiento {
         //caracteres
         añadirFiltrosCaracteres();
     }
-        public ArrayList<String> preprocessing(String sTexto) throws IOException {
+        public ArrayList<String> preprocessing(String sTexto) throws IOException, URISyntaxException {
 
         ArrayList asTerm;
 
@@ -41,8 +43,9 @@ public class preprocesamiento {
         gestorCaracters.add(new Filtro(" +", " "));
     }
 
-    private ArrayList eliminarTerminos(ArrayList asTerm) throws IOException {
-        String sTerminos = new String (Files.readAllBytes(Paths.get("C:\\Users\\condo\\Desktop\\ProjectRecInf\\RecInf\\Preprocesamiento\\src\\preprocessing\\terminos.txt")));
+    private ArrayList eliminarTerminos(ArrayList asTerm) throws IOException, URISyntaxException {
+        URL url = getClass().getResource("terminos.txt");
+        String sTerminos = new String (Files.readAllBytes(Paths.get(url.toURI())));
         String[] asTerminos = sTerminos.split(" ");
 
         for (String sTermino : asTerminos) {
