@@ -6,6 +6,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -22,7 +23,7 @@ public class main {
     static HashMap<String, docIDpeso > indiceInvertido = new HashMap<String, docIDpeso>();
 
     static HashMap<String, Double > longPesoDoc = new HashMap<String, Double>();
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException, URISyntaxException {
         System.out.println("Introduce directorio de trabajo:");
         Scanner out = new Scanner(System.in);
         String directorio = out.nextLine();
@@ -41,7 +42,6 @@ public class main {
 
             conteoElementos(asTerm);
             calcularTF_paso2(Paths.get(afFichero[x].getAbsolutePath()).getFileName().toString());
-
         }
 
         calcularIDF(afFichero.length);
@@ -65,12 +65,14 @@ public class main {
     }
 
     public static void calcularTF_paso2(String sNombreFichero) {
+        //System.out.println(sNombreFichero);
         for (String sTerm : fTerm.keySet()) {
             double tf = (double) 1 + Math.log(fTerm.get(sTerm)) / Math.log(2);
 
             if(!indiceInvertido.containsKey(sTerm)) indiceInvertido.put(sTerm, new docIDpeso());
 
             indiceInvertido.get(sTerm).docId.put(sNombreFichero, tf);
+            //System.out.println(indiceInvertido.keySet());
         }
     }
 

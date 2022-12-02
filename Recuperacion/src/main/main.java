@@ -18,8 +18,8 @@ public class main {
 
     static HashMap<String, Double> docId = new HashMap<String, Double>();
 
-    public static void main(String[] args) throws IOException, URISyntaxException {
-        boolean bFinished = false;
+    public static void main(String[] args) throws IOException, URISyntaxException, InterruptedException {
+        boolean bFinished = true;
         _preprocesamiento = new preprocesamiento();
         do{
             System.out.println("Search: ");
@@ -45,8 +45,7 @@ public class main {
             System.out.println("¿Quieres realizar otra consulta?S/N: ");
             Scanner out2 = new Scanner(System.in);
             String sRespuesta = out2.nextLine();
-            if(sRespuesta.equals("N")) bFinished = true;
-
+            if(sRespuesta.equals("N")) bFinished = false;
         }while(bFinished);
     }
 

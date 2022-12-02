@@ -8,6 +8,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Locale;
 
 public class preprocesamiento {
     private gestorFiltro gestorCaracters = new gestorFiltro();
@@ -22,10 +23,10 @@ public class preprocesamiento {
 
         //preprocesamos
             // convertimos todo el texto a minúsculas
-            sTexto.toLowerCase();
+            sTexto = sTexto.toLowerCase(Locale.ENGLISH);
             //aplicamos el filtro
             sTexto = gestorCaracters.apply(sTexto);
-
+            System.out.println(sTexto);
             //Division de texto en terminos en un array
             asTerm = new ArrayList<String>(Arrays.asList(sTexto.split(" ")));
 
@@ -36,7 +37,7 @@ public class preprocesamiento {
     private void añadirFiltrosCaracteres() {
         gestorCaracters.add(new Filtro("\\p{Punct}", " "));
         //eliminamos los numeros
-        gestorCaracters.add(new Filtro("\\s[0-9]+\\s", " "));
+        gestorCaracters.add(new Filtro("[^A-Za-z]", " "));
         //eliminamos  los "-" que no sean guiones
         gestorCaracters.add(new Filtro("-+ | -+", " "));
         //eliminamos los espacios duplicdos
@@ -46,7 +47,7 @@ public class preprocesamiento {
     private ArrayList eliminarTerminos(ArrayList asTerm) throws IOException, URISyntaxException {
         URL url = getClass().getResource("terminos.txt");
         String sTerminos = new String (Files.readAllBytes(Paths.get(url.toURI())));
-        String[] asTerminos = sTerminos.split(" ");
+        String[] asTerminos = sTerminos.split("\n");
 
         for (String sTermino : asTerminos) {
             if(asTerm.contains(sTermino)) {
