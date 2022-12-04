@@ -1,6 +1,8 @@
 package preprocessing;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
@@ -46,15 +48,12 @@ public class preprocesamiento {
 
     private ArrayList<String> eliminarTerminos(ArrayList<String> asTerm) throws IOException, URISyntaxException {
         URL url = getClass().getResource("terminos.txt");
-        String sTerminos = new String (Files.readAllBytes(Paths.get(url.toURI())));
-        String[] asTerminos = sTerminos.split("[ ||\n]");
-
-        //System.out.println("Terminos a eliminar: " + asTerminos.length);
-        for (String sTermino : asTerminos) {
-            System.out.println("sTermino: " + sTermino + " asTerm: " + asTerm);
-            if(asTerm.contains(sTermino)) {
-                System.out.println("Eliminando: " + sTermino);
-                asTerm.remove(sTermino);
+        BufferedReader br = new BufferedReader(new FileReader(url.toURI().getPath()));
+        String sWord;
+        while((sWord = br.readLine()) != null) {
+            while(asTerm.contains(sWord)) {
+                //System.out.println("Eliminando: " + sWord);
+                asTerm.remove(sWord);
             }
         }
 

@@ -34,7 +34,6 @@ public class main {
         ArrayList<String> asTerm;
         preprocesamiento prepro = new preprocesamiento();
 
-
         for (int x=0;x<afFichero.length;x++) {
             fTerm = new HashMap<String, Integer>();
             sTexto = new String (Files.readAllBytes(Paths.get(afFichero[x].getAbsolutePath())));
@@ -62,6 +61,7 @@ public class main {
                 fTerm.put(sTerm, 1);
             }
         }
+
     }
 
     public static void calcularTF_paso2(String sNombreFichero) {
@@ -74,6 +74,8 @@ public class main {
             indiceInvertido.get(sTerm).docId.put(sNombreFichero, tf);
             //System.out.println(indiceInvertido.keySet());
         }
+        //System.out.println(indiceInvertido);
+        System.out.println(fTerm);
     }
 
     public static void calcularIDF (int nDocs) {
@@ -96,7 +98,7 @@ public class main {
         PrintWriter pw ;
         try
         {
-            fichero = new FileWriter("longPesoDoc.txt");
+            fichero = new FileWriter("../longPesoDoc.txt");
             pw = new PrintWriter(fichero);
 
             for (String sDoc : longPesoDoc.keySet()) {
@@ -118,7 +120,7 @@ public class main {
     }
 
     public static void imprimirIndiceInvertido() {
-        String path = "indiceInvertido.json";
+        String path = "../indiceInvertido.json";
         try (PrintWriter out = new PrintWriter(new FileWriter(path))) {
             Gson gson = new Gson();
             String jsonString = gson.toJson(indiceInvertido);
