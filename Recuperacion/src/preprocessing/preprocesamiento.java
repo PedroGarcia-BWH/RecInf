@@ -1,6 +1,8 @@
 package preprocessing;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
@@ -26,9 +28,9 @@ public class preprocesamiento {
             sTexto = sTexto.toLowerCase(Locale.ENGLISH);
             //aplicamos el filtro
             sTexto = gestorCaracters.apply(sTexto);
-            System.out.println(sTexto);
+            //System.out.println(sTexto);
             //Division de texto en terminos en un array
-            asTerm = new ArrayList<String>(Arrays.asList(sTexto.split(" ")));
+            asTerm = new ArrayList<String>(Arrays.asList(sTexto.split("[ ||\n]")));
 
             //aplicamos el filtro de terminos
             return eliminarTerminos(asTerm);
@@ -44,14 +46,14 @@ public class preprocesamiento {
         gestorCaracters.add(new Filtro(" +", " "));
     }
 
-    private ArrayList eliminarTerminos(ArrayList asTerm) throws IOException, URISyntaxException {
+    private ArrayList<String> eliminarTerminos(ArrayList<String> asTerm) throws IOException, URISyntaxException {
         URL url = getClass().getResource("terminos.txt");
-        String sTerminos = new String (Files.readAllBytes(Paths.get(url.toURI())));
-        String[] asTerminos = sTerminos.split("\n");
-
-        for (String sTermino : asTerminos) {
-            if(asTerm.contains(sTermino)) {
-                asTerm.remove(sTermino);
+        BufferedReader br = new BufferedReader(new FileReader(url.toURI().getPath()));
+        String sWord;
+        while((sWord = br.readLine()) != null) {
+            while(asTerm.contains(sWord)) {
+                //System.out.println("Eliminando: " + sWord);
+                asTerm.remove(sWord);
             }
         }
 

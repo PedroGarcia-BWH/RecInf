@@ -11,6 +11,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Scanner;
 
 import com.google.gson.Gson;
@@ -121,9 +122,19 @@ public class main {
 
     public static void imprimirIndiceInvertido() {
         String path = "../indiceInvertido.json";
+        JsonContainer jsonContainer = new JsonContainer();
+        List<ContainerDocId> aDocIDpeso = new ArrayList<ContainerDocId>();
         try (PrintWriter out = new PrintWriter(new FileWriter(path))) {
-            Gson gson = new Gson();
-            String jsonString = gson.toJson(indiceInvertido);
+            Gson gson =  new Gson();
+             for(String sTerm : indiceInvertido.keySet()) {
+                // jsonContainer.container.add(new Container(sTerm, ));
+                 aDocIDpeso = new ArrayList<ContainerDocId>();
+                 for(String sDoc : indiceInvertido.get(sTerm).docId.keySet()) {
+                    aDocIDpeso.add(new ContainerDocId(sDoc, indiceInvertido.get(sTerm).docId.get(sDoc)));
+                 }
+                 jsonContainer.container.add(new Container(sTerm, indiceInvertido.get(sTerm).getIDF(), aDocIDpeso));
+             }
+            String jsonString = gson.toJson(jsonContainer);
             out.write(jsonString);
         } catch (Exception e) {
             e.printStackTrace();
