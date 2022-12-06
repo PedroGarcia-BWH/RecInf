@@ -76,7 +76,7 @@ public class main {
             //System.out.println(indiceInvertido.keySet());
         }
         //System.out.println(indiceInvertido);
-        System.out.println(fTerm);
+        //System.out.println(fTerm);
     }
 
     public static void calcularIDF (int nDocs) {

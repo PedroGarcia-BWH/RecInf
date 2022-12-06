@@ -2,11 +2,12 @@ package main;
 
 public class ContainerDocId {
     public String sDocID;
-    public double dPeso;
+    public double iPeso;
 
-    public ContainerDocId(String sDocID, double dPeso) {
+    public ContainerDocId(String sDocID, double iPeso) {
         this.sDocID= sDocID;
-        this.dPeso = dPeso;
+        this.iPeso = iPeso;
+        System.out.println(iPeso);
     }
 
 }

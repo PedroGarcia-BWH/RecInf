@@ -35,16 +35,21 @@ public class main {
             List<Ranking> aRanking = sort();
 
             //print ranking
+            System.out.println("RESULTADO DE LA BÚSQUEDA");
             if(aRanking.size() < 10) {
                 if (aRanking.size() == 0) {
                     System.out.println("No results found");
                 } else {
                     for (int i = 0; i < aRanking.size(); i++) {
-                        System.out.println(aRanking.get(i).doc + " " + aRanking.get(i).peso);
+                        System.out.println("Title: " + getTitulo(aRanking.get(i).doc));
+                        System.out.println("        Doc-id: " + aRanking.get(i).doc + " Weight: " + aRanking.get(i).peso + "\n");
                     }
                 }
             }else{
-                for (int i = 0; i < 10; i++) { System.out.println(aRanking.get(i).doc + " " + aRanking.get(i).peso); }
+                for (int i = 0; i < 10; i++) {
+                    System.out.println("Title: " + getTitulo(aRanking.get(i).doc));
+                    System.out.println("        Doc-id: " + aRanking.get(i).doc + " Weight: " + aRanking.get(i).peso + "\n");
+                }
             }
 
             System.out.println("¿Quieres realizar otra consulta?S/N: ");
@@ -80,7 +85,14 @@ public class main {
                     if(docId.containsKey(sDocIdpeso)) docId.put(sDocIdpeso, docId.get(sDocIdpeso) + dPeso);
                     else docId.put(sDocIdpeso, dPeso);
                 }
+
             }
+        }
+        System.out.println(docId);
+        for(String sDocId : docId.keySet()) {
+            //System.out.println(" Peso: " + docId.get(sDocId) + "" + longDocumento.get(sDocId));
+            System.out.println("hola");
+            docId.put(sDocId, docId.get(sDocId) / longDocumento.get(sDocId));
         }
         //System.out.println(indiceInvertido);
     }
@@ -104,14 +116,19 @@ public class main {
         Gson gson = new Gson();
         BufferedReader br = new BufferedReader(new FileReader("../indiceInvertido.json"));
         JsonContainer jsonContainer = gson.fromJson(br, JsonContainer.class);
-        for ( Container container : jsonContainer.container) {
+        for(Container container : jsonContainer.container) {
             indiceInvertido.put(container.sTermino, new docIDpeso());
             indiceInvertido.get(container.sTermino).setIDF(container.IDF);
             for(ContainerDocId containerDocId : container.aDocIDpeso) {
-                //System.out.println(containerDocId.dPeso);
-                indiceInvertido.get(container.sTermino).docId.put(containerDocId.sDocID, containerDocId.dPeso);
+                //System.out.println(containerDocId.iPeso);
+                indiceInvertido.get(container.sTermino).docId.put(containerDocId.sDocID, containerDocId.iPeso);
             }
         }
-        //System.out.println(indiceInvertido);
+        //System.out.println(indiceInvertido.get("formation").docId.get("000084578400037"));
+    }
+
+    public static String getTitulo(String sDocId) throws IOException {
+        BufferedReader br = new BufferedReader(new FileReader("C:\\Users\\condo\\Desktop\\ProjectRecInf\\corpus\\" + sDocId));
+        return  br.readLine();
     }
 }
