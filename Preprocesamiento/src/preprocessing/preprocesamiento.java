@@ -44,6 +44,8 @@ public class preprocesamiento {
         gestorCaracters.add(new Filtro("-+ | -+", " "));
         //eliminamos los espacios duplicdos
         gestorCaracters.add(new Filtro(" +", " "));
+        gestorCaracters.add(new Filtro("^\\s*", ""));
+        gestorCaracters.add(new Filtro("\\s*$", ""));
     }
 
     private ArrayList<String> eliminarTerminos(ArrayList<String> asTerm) throws IOException, URISyntaxException {

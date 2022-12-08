@@ -70,6 +70,7 @@ public class main {
 
 
         Collections.sort(sorted, Comparator.comparing(Ranking::getPeso));
+        Collections.reverse(sorted);
         return sorted;
     }
 
@@ -90,8 +91,8 @@ public class main {
         }
         System.out.println(docId);
         for(String sDocId : docId.keySet()) {
-            //System.out.println(" Peso: " + docId.get(sDocId) + "" + longDocumento.get(sDocId));
-            System.out.println("hola");
+            System.out.println(" Peso: " + docId.get(sDocId) + " Long: " + longDocumento.get(sDocId));
+            //System.out.println("hola");
             docId.put(sDocId, docId.get(sDocId) / longDocumento.get(sDocId));
         }
         //System.out.println(indiceInvertido);
@@ -128,7 +129,7 @@ public class main {
     }
 
     public static String getTitulo(String sDocId) throws IOException {
-        BufferedReader br = new BufferedReader(new FileReader("C:\\Users\\condo\\Desktop\\ProjectRecInf\\corpus\\" + sDocId));
+        BufferedReader br = new BufferedReader(new FileReader("C:\\Users\\condo\\Downloads\\corpus\\corpus\\" + sDocId));
         return  br.readLine();
     }
 }

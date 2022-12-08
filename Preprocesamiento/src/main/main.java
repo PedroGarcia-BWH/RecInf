@@ -89,8 +89,11 @@ public class main {
                 double peso = indiceInvertido.get(sTerm).docId.get(sDoc) * indiceInvertido.get(sTerm).getIDF();
 
                 if(!longPesoDoc.containsKey(sDoc)) longPesoDoc.put(sDoc, 0.0);
-                longPesoDoc.put(sDoc, longPesoDoc.get(sDoc) + Math.pow(peso, 2));
+                longPesoDoc.put(sDoc, longPesoDoc.get(sDoc) +  peso);
             }
+        }
+        for(String sDoc : longPesoDoc.keySet()) {
+            longPesoDoc.put(sDoc, Math.sqrt(longPesoDoc.get(sDoc)));
         }
     }
 
